@@ -18,7 +18,7 @@ Each message has at most one favorite:
 
 Clicking the active scope removes the favorite. Clicking another scope moves the existing favorite directly to that scope.
 
-The first implementation covers the domain model and persistence contract. Favorite browsing is intentionally a later feature.
+The plugin persists favorites locally and provides scoped browsing in the TUI sidebar.
 
 ## Demo
 
@@ -28,7 +28,7 @@ The plugin adds the three scoped favorite actions directly to the assistant mess
 
 The active scope is shown with a green marker. Selecting another scope moves the favorite directly, while selecting the active scope removes it.
 
-The sidebar also includes a collapsible `FAVS` section with independent sections for `Session`, `Project`, and `Global`. Favorite messages are currently displayed as snapshots only; selecting a message will be defined in a later iteration.
+The sidebar includes a collapsible `FAVS` section with independent toggles for `Session`, `Project`, and `Global`. Empty scopes stay hidden, each snapshot is displayed as a single truncated line, and the sidebar updates immediately when favorites are added or removed. Favorite messages are currently displayed only; selecting a message will be defined in a later iteration.
 
 ## Compatibility
 

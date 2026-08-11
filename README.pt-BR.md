@@ -18,7 +18,7 @@ Cada mensagem pode ter no máximo um favorito:
 
 Clicar no escopo ativo remove o favorito. Clicar em outro escopo move diretamente o favorito existente para o novo escopo.
 
-A primeira implementação cobre o modelo de domínio e o contrato de persistência. A navegação pelos favoritos será implementada em uma etapa posterior.
+O plugin persiste os favoritos localmente e oferece navegação por escopo na sidebar do TUI.
 
 ## Demonstração
 
@@ -28,7 +28,7 @@ O plugin adiciona as três ações de favorito diretamente aos metadados da mens
 
 O escopo ativo aparece com um marcador verde. Selecionar outro escopo move diretamente o favorito, enquanto selecionar o escopo ativo remove o favorito.
 
-A sidebar também inclui uma seção recolhível `FAVS` com seções independentes para `Session`, `Project` e `Global`. As mensagens favoritadas são exibidas atualmente apenas como snapshots; o comportamento ao selecionar uma mensagem será definido em uma etapa posterior.
+A sidebar também inclui uma seção recolhível `FAVS` com toggles independentes para `Session`, `Project` e `Global`. Escopos vazios ficam ocultos, cada snapshot é exibido em uma única linha truncada, e a sidebar é atualizada imediatamente ao adicionar ou remover favoritos. As mensagens favoritadas são exibidas atualmente apenas; o comportamento ao selecionar uma mensagem será definido em uma etapa posterior.
 
 ## Compatibilidade
 

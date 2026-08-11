@@ -12,21 +12,21 @@
   },
   "files": ["dist"],
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "bun run script/build.ts",
     "prepublishOnly": "bun run build",
     "test": "bun test",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@opencode-ai/plugin": "latest"
+    "@opencode-ai/plugin": "1.18.16"
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "@opencode-ai/sdk": "latest",
-    "@opentui/core": "latest",
-    "@opentui/keymap": "latest",
-    "@opentui/solid": "latest",
-    "solid-js": "latest",
+    "@opencode-ai/sdk": "1.18.16",
+    "@opentui/core": "0.4.5",
+    "@opentui/keymap": "0.4.5",
+    "@opentui/solid": "0.4.5",
+    "solid-js": "1.9.10",
     "typescript": "latest"
   }
 }
