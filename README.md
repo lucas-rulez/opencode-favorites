@@ -14,6 +14,14 @@ Clicking the active scope removes the favorite. Clicking another scope moves the
 
 The first implementation covers the domain model and persistence contract. Favorite browsing is intentionally a later feature.
 
+## Demo
+
+The plugin adds the three scoped favorite actions directly to the assistant message metadata:
+
+![OpenCode favorites in assistant message metadata](docs/images/print-opencode-favorites.png)
+
+The active scope is shown with a green marker. Selecting another scope moves the favorite directly, while selecting the active scope removes it.
+
 ## Compatibility
 
 The TUI integration requires an OpenCode build with the `message_metadata` slot and the host-owned `Action` component. These capabilities are being developed in the `lucas-rulez/opencode-foundry` fork.
