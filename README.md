@@ -36,7 +36,7 @@ The sidebar includes a collapsible `FAVS` section with independent toggles for `
 
 ## Compatibility
 
-The TUI integration requires an OpenCode build with the `message_metadata` slot and the host-owned `Action` component. These capabilities are being developed in the `lucas-rulez/opencode-foundry` fork.
+The TUI integration requires an OpenCode build with the `message_metadata` slot and the host-owned `Action` component. These capabilities are being developed in the [`opencode-foundry`](https://github.com/lucas-rulez/opencode-foundry) fork.
 
 After building the package, configure the fork's `tui.json` with:
 
