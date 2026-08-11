@@ -1,8 +1,14 @@
+<div align="center">
+
 # opencode-favorites
 
 Scoped favorites for OpenCode AI messages.
 
-This project is designed for the custom `opencode-foundry` TUI extensions. A favorite keeps both the original message reference and a snapshot of the visible response content, so it remains available after history compression or message removal.
+[English](README.md) | [Português (Brasil)](README.pt-BR.md)
+
+</div>
+
+This project is designed for the custom [`opencode-foundry`](https://github.com/lucas-rulez/opencode-foundry) TUI extensions. A favorite keeps both the original message reference and a snapshot of the visible response content, so it remains available after history compression or message removal.
 
 Each message has at most one favorite:
 
