@@ -26,11 +26,11 @@ O plugin adiciona as três ações de favorito diretamente aos metadados da mens
 
 ![Favoritos do OpenCode nos metadados da mensagem da IA](docs/images/print-opencode-favorites.png)
 
+O escopo ativo aparece com um marcador verde. Selecionar outro escopo move diretamente o favorito, enquanto selecionar o escopo ativo remove o favorito.
+
 A sidebar com favoritos cadastrados em vários escopos:
 
 ![Sidebar de favoritos do OpenCode com vários favoritos salvos](docs/images/print-opencode-sidebar.png)
-
-O escopo ativo aparece com um marcador verde. Selecionar outro escopo move diretamente o favorito, enquanto selecionar o escopo ativo remove o favorito.
 
 A sidebar também inclui uma seção recolhível `FAVS` com toggles independentes para `Session`, `Project` e `Global`. Escopos vazios ficam ocultos, cada snapshot é exibido em uma única linha truncada, e a sidebar é atualizada imediatamente ao adicionar ou remover favoritos. As mensagens favoritadas são exibidas atualmente apenas; o comportamento ao selecionar uma mensagem será definido em uma etapa posterior.
 

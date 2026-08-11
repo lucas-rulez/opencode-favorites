@@ -26,11 +26,11 @@ The plugin adds the three scoped favorite actions directly to the assistant mess
 
 ![OpenCode favorites in assistant message metadata](docs/images/print-opencode-favorites.png)
 
+The active scope is shown with a green marker. Selecting another scope moves the favorite directly, while selecting the active scope removes it.
+
 The sidebar with favorites populated across multiple scopes:
 
 ![OpenCode favorites sidebar with multiple saved favorites](docs/images/print-opencode-sidebar.png)
-
-The active scope is shown with a green marker. Selecting another scope moves the favorite directly, while selecting the active scope removes it.
 
 The sidebar includes a collapsible `FAVS` section with independent toggles for `Session`, `Project`, and `Global`. Empty scopes stay hidden, each snapshot is displayed as a single truncated line, and the sidebar updates immediately when favorites are added or removed. Favorite messages are currently displayed only; selecting a message will be defined in a later iteration.
 
