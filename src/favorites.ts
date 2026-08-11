@@ -32,6 +32,12 @@ export function setFavorite(store: FavoriteStore, favorite: Favorite): FavoriteS
   return { version: 1, items: [...items, favorite] }
 }
 
+export function toggleFavorite(store: FavoriteStore, favorite: Favorite): FavoriteStore {
+  const current = favoriteFor(store, favorite.sessionID, favorite.messageID)
+  if (current?.scope === favorite.scope) return removeFavorite(store, favorite.sessionID, favorite.messageID)
+  return setFavorite(store, favorite)
+}
+
 export function removeFavorite(store: FavoriteStore, sessionID: string, messageID: string): FavoriteStore {
   return {
     version: 1,

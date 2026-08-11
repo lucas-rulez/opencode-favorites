@@ -4,13 +4,29 @@
   "type": "module",
   "description": "Scoped favorites for OpenCode AI messages.",
   "license": "MIT",
-  "private": true,
+  "exports": {
+    "./tui": {
+      "types": "./dist/tui.d.ts",
+      "default": "./dist/tui.js"
+    }
+  },
+  "files": ["dist"],
   "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "prepublishOnly": "bun run build",
     "test": "bun test",
     "typecheck": "tsc --noEmit"
   },
+  "dependencies": {
+    "@opencode-ai/plugin": "latest"
+  },
   "devDependencies": {
     "@types/bun": "latest",
+    "@opencode-ai/sdk": "latest",
+    "@opentui/core": "latest",
+    "@opentui/keymap": "latest",
+    "@opentui/solid": "latest",
+    "solid-js": "latest",
     "typescript": "latest"
   }
 }

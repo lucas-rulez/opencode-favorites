@@ -4,6 +4,7 @@ import {
   favoriteFor,
   removeFavorite,
   setFavorite,
+  toggleFavorite,
   visibleFavorites,
   type Favorite,
 } from "../src/favorites"
@@ -37,6 +38,14 @@ test("removing the active favorite leaves the message unfavorited", () => {
   const store = setFavorite(emptyFavoriteStore(), favorite("global"))
 
   expect(removeFavorite(store, "ses_one", "msg_one").items).toEqual([])
+})
+
+test("clicking another scope moves the favorite directly", () => {
+  const session = setFavorite(emptyFavoriteStore(), favorite("session"))
+  const project = toggleFavorite(session, favorite("project"))
+
+  expect(project.items).toHaveLength(1)
+  expect(project.items[0].scope).toBe("project")
 })
 
 test("visibility follows the favorite scope", () => {
