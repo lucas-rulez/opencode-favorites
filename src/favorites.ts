@@ -57,3 +57,13 @@ export function visibleFavorites(store: FavoriteStore, sessionID: string, projec
       (item.scope === "session" && item.sessionID === sessionID),
   )
 }
+
+export function groupVisibleFavorites(store: FavoriteStore, sessionID: string, projectID: string) {
+  return visibleFavorites(store, sessionID, projectID).reduce(
+    (groups, favorite) => {
+      groups[favorite.scope].push(favorite)
+      return groups
+    },
+    { session: [], project: [], global: [] } as Record<FavoriteScope, Favorite[]>,
+  )
+}

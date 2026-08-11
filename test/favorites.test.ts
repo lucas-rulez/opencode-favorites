@@ -2,6 +2,7 @@ import { expect, test } from "bun:test"
 import {
   emptyFavoriteStore,
   favoriteFor,
+  groupVisibleFavorites,
   removeFavorite,
   setFavorite,
   toggleFavorite,
@@ -68,4 +69,21 @@ test("visibility follows the favorite scope", () => {
     "msg_global",
   ])
   expect(visibleFavorites(store, "ses_two", "prj_two").map((item) => item.messageID)).toEqual(["msg_global"])
+})
+
+test("groups visible favorites without duplicating scopes", () => {
+  const store = ["session", "project", "global"].reduce(
+    (current, scope) =>
+      setFavorite(current, {
+        ...favorite(scope as Favorite["scope"]),
+        messageID: `msg_${scope}`,
+      }),
+    emptyFavoriteStore(),
+  )
+
+  const groups = groupVisibleFavorites(store, "ses_two", "prj_one")
+
+  expect(groups.session).toEqual([])
+  expect(groups.project.map((item) => item.messageID)).toEqual(["msg_project"])
+  expect(groups.global.map((item) => item.messageID)).toEqual(["msg_global"])
 })
