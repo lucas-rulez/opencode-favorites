@@ -1,0 +1,16 @@
+{
+  "name": "opencode-favorites",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Scoped favorites for OpenCode AI messages.",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "test": "bun test",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "latest"
+  }
+}
