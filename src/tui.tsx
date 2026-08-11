@@ -1,5 +1,5 @@
 /** @jsxImportSource @opentui/solid */
-import { createSignal } from "solid-js"
+import { createMemo, createSignal, For, Show } from "solid-js"
 import type { Part, Message } from "@opencode-ai/sdk/v2"
 import type { TuiPluginModule, TuiSlotContext } from "@opencode-ai/plugin/tui"
 import type { JSX } from "@opentui/solid"
@@ -7,6 +7,7 @@ import type { RGBA } from "@opentui/core"
 import {
   emptyFavoriteStore,
   favoriteFor,
+  groupVisibleFavorites,
   toggleFavorite,
   type Favorite,
   type FavoriteScope,
@@ -26,6 +27,10 @@ type MessageMetadataProps = {
   message_id: string
 }
 
+type SidebarContentProps = {
+  session_id: string
+}
+
 type ActionContext = TuiSlotContext & {
   Action: TuiAction
 }
@@ -36,6 +41,8 @@ type TuiAction = (props: {
   fg?: RGBA
   bg?: RGBA
 }) => JSX.Element
+
+type TuiApi = Parameters<NonNullable<TuiPluginModule["tui"]>>[0]
 
 const Favorites: TuiPluginModule = {
   id: "opencode-favorites",
@@ -49,7 +56,7 @@ const Favorites: TuiPluginModule = {
 
     api.slots.register({
       slots: {
-        message_metadata(ctx, props: MessageMetadataProps) {
+        message_metadata(ctx: TuiSlotContext, props: MessageMetadataProps) {
           const action = (ctx as ActionContext).Action
           const session = api.state.session.get(props.session_id)
           const message = api.state.session
@@ -98,12 +105,78 @@ const Favorites: TuiPluginModule = {
             </box>
           )
         },
+        sidebar_content(ctx: TuiSlotContext, props: SidebarContentProps) {
+          return <FavoritesSidebar api={api} ctx={ctx} sessionID={props.session_id} store={store} />
+        },
       },
     })
   },
 }
 
 export default Favorites
+
+function FavoritesSidebar(props: {
+  api: TuiApi
+  ctx: TuiSlotContext
+  sessionID: string
+  store: () => FavoriteStore
+}) {
+  const action = (props.ctx as ActionContext).Action
+  const session = createMemo(() => props.api.state.session.get(props.sessionID))
+  const [open, setOpen] = createSignal(true)
+  const [openScopes, setOpenScopes] = createSignal<Record<FavoriteScope, boolean>>({
+    session: true,
+    project: true,
+    global: true,
+  })
+  const groups = createMemo(() => {
+    const projectID = session()?.projectID
+    if (!projectID) return { session: [], project: [], global: [] } as Record<FavoriteScope, Favorite[]>
+    return groupVisibleFavorites(props.store(), props.sessionID, projectID)
+  })
+  const Action = action
+
+  if (typeof action !== "function") return null
+
+  const toggleScope = (scope: FavoriteScope) => {
+    setOpenScopes((current) => ({ ...current, [scope]: !current[scope] }))
+  }
+
+  return (
+    <box flexDirection="column" gap={1}>
+      <Action onClick={() => setOpen((current) => !current)} fg={props.ctx.theme.current.text}>
+        {open() ? "▾ " : "▸ "}FAVS
+      </Action>
+      <Show when={open()}>
+        <box flexDirection="column" paddingLeft={2} gap={1}>
+          <For each={scopes}>
+            {(scope) => {
+              const items = () => groups()[scope]
+              return (
+                <box flexDirection="column">
+                  <Action
+                    onClick={() => toggleScope(scope)}
+                    fg={props.ctx.theme.current.textMuted}
+                  >
+                    {openScopes()[scope] ? "▾ " : "▸ "}
+                    {labels[scope]}
+                  </Action>
+                  <Show when={openScopes()[scope]}>
+                    <Show when={items().length > 0} fallback={<text fg={props.ctx.theme.current.textMuted}> (empty)</text>}>
+                      <For each={items()}>
+                        {(favorite) => <text fg={props.ctx.theme.current.text}>{favorite.snapshot.title}</text>}
+                      </For>
+                    </Show>
+                  </Show>
+                </box>
+              )
+            }}
+          </For>
+        </box>
+      </Show>
+    </box>
+  )
+}
 
 function readStore(value: unknown): FavoriteStore {
   if (!value || typeof value !== "object") return emptyFavoriteStore()
