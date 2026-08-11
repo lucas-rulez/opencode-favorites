@@ -28,6 +28,8 @@ The plugin adds the three scoped favorite actions directly to the assistant mess
 
 The active scope is shown with a green marker. Selecting another scope moves the favorite directly, while selecting the active scope removes it.
 
+The sidebar also includes a collapsible `FAVS` section with independent sections for `Session`, `Project`, and `Global`. Favorite messages are currently displayed as snapshots only; selecting a message will be defined in a later iteration.
+
 ## Compatibility
 
 The TUI integration requires an OpenCode build with the `message_metadata` slot and the host-owned `Action` component. These capabilities are being developed in the `lucas-rulez/opencode-foundry` fork.

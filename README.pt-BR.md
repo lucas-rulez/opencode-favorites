@@ -28,6 +28,8 @@ O plugin adiciona as três ações de favorito diretamente aos metadados da mens
 
 O escopo ativo aparece com um marcador verde. Selecionar outro escopo move diretamente o favorito, enquanto selecionar o escopo ativo remove o favorito.
 
+A sidebar também inclui uma seção recolhível `FAVS` com seções independentes para `Session`, `Project` e `Global`. As mensagens favoritadas são exibidas atualmente apenas como snapshots; o comportamento ao selecionar uma mensagem será definido em uma etapa posterior.
+
 ## Compatibilidade
 
 A integração com o TUI exige uma versão do OpenCode com o slot `message_metadata` e o componente `Action` fornecido pelo host. Essas capacidades estão sendo desenvolvidas no fork [`opencode-foundry`](https://github.com/lucas-rulez/opencode-foundry).
