@@ -4,6 +4,7 @@
     "declaration": true,
     "emitDeclarationOnly": false,
     "noEmit": false,
+    "jsx": "react-jsx",
     "rootDir": "src",
     "outDir": "dist"
   },
