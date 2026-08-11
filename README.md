@@ -32,7 +32,7 @@ The sidebar with favorites populated across multiple scopes:
 
 ![OpenCode favorites sidebar with multiple saved favorites](docs/images/print-opencode-sidebar.png)
 
-The sidebar includes a collapsible `FAVS` section with independent toggles for `Session`, `Project`, and `Global`. Empty scopes stay hidden, each snapshot is displayed as a single truncated line, and the sidebar updates immediately when favorites are added or removed. Favorite messages are currently displayed only; selecting a message will be defined in a later iteration.
+The sidebar includes a collapsible `FAVS` section with independent toggles for `Session`, `Project`, and `Global`. Empty scopes stay hidden, each snapshot is displayed as a single truncated line, and the sidebar updates immediately when favorites are added or removed. Selecting a favorite opens actions to view the full message or delete the favorite.
 
 ## Compatibility
 

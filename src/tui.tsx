@@ -8,6 +8,7 @@ import {
   emptyFavoriteStore,
   favoriteFor,
   groupVisibleFavorites,
+  removeFavorite,
   toggleFavorite,
   type Favorite,
   type FavoriteScope,
@@ -108,6 +109,7 @@ const Favorites: TuiPluginModule = {
               ctx={ctx}
               sessionID={props.session_id}
               store={store()}
+              remove={(favorite) => save(removeFavorite(store(), favorite.sessionID, favorite.messageID))}
               subscribe={(listener) => {
                 listeners.add(listener)
                 return () => listeners.delete(listener)
@@ -127,6 +129,7 @@ function FavoritesSidebar(props: {
   ctx: TuiSlotContext
   sessionID: string
   store: FavoriteStore
+  remove: (favorite: Favorite) => void
   subscribe: (listener: (value: FavoriteStore) => void) => () => void
 }) {
   const session = createMemo(() => props.api.state.session.get(props.sessionID))
@@ -149,6 +152,46 @@ function FavoritesSidebar(props: {
     onCleanup(unsubscribe)
   })
 
+  const DialogSelect = props.api.ui.DialogSelect
+  const DialogAlert = props.api.ui.DialogAlert
+  const DialogConfirm = props.api.ui.DialogConfirm
+
+  const openFavoriteActions = (favorite: Favorite) => {
+    props.api.ui.dialog.replace(() => (
+      <DialogSelect
+        title="Favorite actions"
+        options={[
+          { title: "View full message", value: "view" },
+          { title: "Delete favorite", value: "delete" },
+        ]}
+        onSelect={(option) => {
+          if (option.value === "view") {
+            props.api.ui.dialog.replace(() => (
+              <DialogAlert
+                title="Favorite message"
+                message={favorite.snapshot.text}
+                onConfirm={() => props.api.ui.dialog.clear()}
+              />
+            ))
+            return
+          }
+
+          props.api.ui.dialog.replace(() => (
+            <DialogConfirm
+              title="Delete favorite"
+              message="Delete this favorite?"
+              onConfirm={() => {
+                props.remove(favorite)
+                props.api.ui.dialog.clear()
+              }}
+              onCancel={() => props.api.ui.dialog.clear()}
+            />
+          ))
+        }}
+      />
+    ))
+  }
+
   return (
     <Show when={populatedScopes().length > 0}>
       <box flexDirection="column" gap={0}>
@@ -170,11 +213,13 @@ function FavoritesSidebar(props: {
                 </box>
                 <Show when={sessionOpen()}>
                   <For each={groups().session}>
-                    {(favorite) => (
+                  {(favorite) => (
+                    <box flexDirection="row" onMouseUp={() => openFavoriteActions(favorite)}>
                       <text wrapMode="none" fg={props.ctx.theme.current.text}>
                         {preview(favorite.snapshot.title)}
                       </text>
-                    )}
+                    </box>
+                  )}
                   </For>
                 </Show>
               </box>
@@ -190,9 +235,11 @@ function FavoritesSidebar(props: {
                 <Show when={projectOpen()}>
                   <For each={groups().project}>
                     {(favorite) => (
-                      <text wrapMode="none" fg={props.ctx.theme.current.text}>
-                        {preview(favorite.snapshot.title)}
-                      </text>
+                      <box flexDirection="row" onMouseUp={() => openFavoriteActions(favorite)}>
+                        <text wrapMode="none" fg={props.ctx.theme.current.text}>
+                          {preview(favorite.snapshot.title)}
+                        </text>
+                      </box>
                     )}
                   </For>
                 </Show>
@@ -209,9 +256,11 @@ function FavoritesSidebar(props: {
                 <Show when={globalOpen()}>
                   <For each={groups().global}>
                     {(favorite) => (
-                      <text wrapMode="none" fg={props.ctx.theme.current.text}>
-                        {preview(favorite.snapshot.title)}
-                      </text>
+                      <box flexDirection="row" onMouseUp={() => openFavoriteActions(favorite)}>
+                        <text wrapMode="none" fg={props.ctx.theme.current.text}>
+                          {preview(favorite.snapshot.title)}
+                        </text>
+                      </box>
                     )}
                   </For>
                 </Show>
